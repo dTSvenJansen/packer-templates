@@ -1,0 +1,127 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "output_directory": "./output-base/",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "4096"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--vram",
+          "128"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "2"
+        ]
+      ],
+      "vm_name": "vbox-base",
+      "guest_additions_mode": "disable",
+      "guest_os_type": "Windows2012_64",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "disk_size": "60000",
+      "headless": true,
+      "communicator": "winrm",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "8h",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "shutdown_timeout": "15m",
+      "floppy_files": [
+        "answer_files/2019/Autounattend.xml",
+        "./scripts/bootstrap.ps1",
+        "./scripts/unattend.xml"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "powershell",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant",
+      "script": "./scripts/windows-base.ps1"
+    },
+    {
+      "type": "powershell",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant",
+      "script": "./scripts/windows-activate.ps1"
+    },
+    {
+      "type": "powershell",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant",
+      "script": "./scripts/windows-updates.ps1"
+    },
+    {
+      "type": "powershell",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant",
+      "inline": ["Get-WUInstall -MicrosoftUpdate -AcceptAll -Download -Install -IgnoreReboot"]
+    },
+    {
+    "type": "windows-restart",
+    "restart_timeout": "1h"
+    },
+    {
+      "type": "powershell",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant",
+      "inline": ["Get-WUInstall -MicrosoftUpdate -AcceptAll -Download -Install -IgnoreReboot"]
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "1h"
+    },
+    {
+      "type": "powershell",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant",
+      "inline": [
+        "Get-WUInstall -MicrosoftUpdate -AcceptAll -Download -Install -IgnoreReboot"
+      ]
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "1h"
+    },
+    {
+      "type": "powershell",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant",
+      "script": "./scripts/tools_and_stuff.ps1"
+      },
+      {
+      "type": "windows-restart",
+      "restart_timeout": "1h"
+      },
+      {
+      "type": "powershell",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant",
+      "script": "./scripts/windows-compress.ps1"
+      }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "windows2019_vbox.box",
+      "vagrantfile_template": "./templates/vagrantfile-windows-2019.template"
+    }
+  ],
+  "variables": {
+    "iso_url": "C:/_Sync-Tools/SynologyDrive/Quellen/Server2019.iso",
+    "iso_checksum_type" : "md5",
+    "iso_checksum": "70FEC2CB1D6759108820130C2B5496DA"
+  }
+}

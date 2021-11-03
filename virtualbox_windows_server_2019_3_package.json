@@ -7,9 +7,9 @@
       "vm_name": "vbox-package-vagrant",
       "headless": true,
         "vboxmanage": [
-        [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+        [ "modifyvm", "{{.Name}}", "--memory", "4096" ],
         [ "modifyvm", "{{.Name}}", "--vram", "128" ],
-        [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
         ],
         "guest_additions_mode": "attach",
         "winrm_username": "vagrant",

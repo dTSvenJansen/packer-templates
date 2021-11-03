@@ -8,9 +8,9 @@
       "guest_additions_mode" : "disable",
       "headless": true, 
       "vboxmanage": [
-        [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+        [ "modifyvm", "{{.Name}}", "--memory", "4096" ],
         [ "modifyvm", "{{.Name}}", "--vram", "128" ],
-        [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
       ],
       "communicator": "winrm",
       "winrm_username": "vagrant",
