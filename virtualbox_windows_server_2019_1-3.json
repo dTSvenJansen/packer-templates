@@ -2,7 +2,7 @@
   "builders": [
     {
       "type": "virtualbox-iso",
-      "output_directory": "./output-base/",
+      "output_directory": "./output-all/",
       "vboxmanage": [
         [
           "modifyvm",
@@ -23,7 +23,7 @@
           "2"
         ]
       ],
-      "vm_name": "vbox-base",
+      "vm_name": "vbox-all",
       "guest_additions_mode": "disable",
       "guest_os_type": "Windows2012_64",
       "iso_url": "{{ user `iso_url` }}",
@@ -49,12 +49,6 @@
       "elevated_user": "vagrant",
       "elevated_password": "vagrant",
       "script": "./scripts/windows-base.ps1"
-    },
-    {
-      "type": "powershell",
-      "elevated_user": "vagrant",
-      "elevated_password": "vagrant",
-      "script": "./scripts/windows-activate.ps1"
     },
     {
       "type": "powershell",
@@ -99,24 +93,16 @@
       "elevated_user": "vagrant",
       "elevated_password": "vagrant",
       "script": "./scripts/tools_and_stuff.ps1"
-      },
-      {
-      "type": "windows-restart",
-      "restart_timeout": "1h"
-      },
-      {
-      "type": "powershell",
-      "elevated_user": "vagrant",
-      "elevated_password": "vagrant",
-      "script": "./scripts/windows-compress.ps1"
-      }
-  ],
-  "post-processors": [
+    },
     {
-      "type": "vagrant",
-      "keep_input_artifact": true,
-      "output": "windows2019_vbox.box",
-      "vagrantfile_template": "./templates/vagrantfile-windows-2019.template"
+    "type": "windows-restart",
+    "restart_timeout": "1h"
+    },
+    {
+    "type": "powershell",
+    "elevated_user": "vagrant",
+    "elevated_password": "vagrant",
+    "script": "./scripts/windows-compress.ps1"
     }
   ],
   "variables": {
