@@ -54,6 +54,12 @@
       "type": "powershell",
       "elevated_user": "vagrant",
       "elevated_password": "vagrant",
+      "script": "./scripts/windows-rename.ps1"
+    },
+    {
+      "type": "powershell",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant",
       "script": "./scripts/windows-updates.ps1"
     },
     {
@@ -81,6 +87,12 @@
       "elevated_user": "vagrant",
       "elevated_password": "vagrant",
       "script": "./scripts/tools_and_stuff.ps1"
+    },
+    {
+      "type": "powershell",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant",
+      "script": "./scripts/chocolatey.ps1"
     },
     {
     "type": "windows-restart",

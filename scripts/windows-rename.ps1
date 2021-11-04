@@ -1,2 +1,2 @@
 # Rename Computer
-Rename-Computer -ComputerName "test" -Force
+Rename-Computer -NewName "test" -Force

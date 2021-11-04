@@ -1,9 +1,3 @@
-# add your customizations here in this script.
-# e.g. install Chocolatey
-if (Test-Path "$env:windir\explorer.exe") {
-Invoke-Webrequest https://chocolatey.org/install.ps1 -UseBasicParsing | Invoke-Expression
-}
-
 # adding a syscrep script to c:\scripts. This will set the winrm service to start manually
 # https://github.com/mwrock/packer-templates/issues/49
 Write-Host "Add sysprep script to c:\scripts to call when Packer performs a shutdown."
